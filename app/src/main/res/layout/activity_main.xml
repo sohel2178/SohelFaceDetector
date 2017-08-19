@@ -6,9 +6,19 @@
     android:layout_height="match_parent"
     tools:context="com.linearbd.sohelfacedetector.MainActivity">
 
-   <com.linearbd.sohelfacedetector.FaceView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/faceView"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/faceDetectorActivity"
+        android:text="go to face detector activity"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/trackingFaceActivity"
+        android:layout_below="@+id/faceDetectorActivity"
+        android:text="go to tracking face Activity"/>
+
+
 
 </RelativeLayout>

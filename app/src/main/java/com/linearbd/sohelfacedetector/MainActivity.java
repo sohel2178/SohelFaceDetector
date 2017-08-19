@@ -1,11 +1,14 @@
 package com.linearbd.sohelfacedetector;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Frame;
@@ -14,55 +17,48 @@ import com.google.android.gms.vision.face.FaceDetector;
 import com.google.android.gms.vision.face.Landmark;
 import com.google.android.gms.vision.face.LargestFaceFocusingProcessor;
 
-public class MainActivity extends AppCompatActivity {
+import static com.linearbd.sohelfacedetector.R.id.faceDetectorActivity;
+import static com.linearbd.sohelfacedetector.R.id.trackingFaceActivity;
 
-    private FaceView faceView;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Button btnFaceDetectorActivity,btnTrackinFaceActivity;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.face);
+        btnFaceDetectorActivity = (Button) findViewById(faceDetectorActivity);
+        btnTrackinFaceActivity = (Button) findViewById(trackingFaceActivity);
 
-        final FaceDetector faceDetector = new FaceDetector.Builder(this)
-                .setTrackingEnabled(false)
-                .setLandmarkType(FaceDetector.ALL_LANDMARKS)
-                .build();
+        btnFaceDetectorActivity.setOnClickListener(this);
+        btnTrackinFaceActivity.setOnClickListener(this);
 
-        Detector<Face> detector = new Detector<Face>() {
-            @Override
-            public SparseArray<Face> detect(Frame frame) {
-                return faceDetector.detect(frame);
-            }
-        };
+    }
 
+    @Override
+    public void onClick(View v) {
 
-        //detector.setProcessor(new LargestFaceFocusingProcessor());
+        switch (v.getId()){
+            case faceDetectorActivity:
+                gotoFaceDetectorActivity();
+                break;
 
-        if(!detector.isOperational()){
-            Log.d("HHHH","Not Operational");
-            Log.d("HHHH","Not Operational");
-            return;
-
+            case R.id.trackingFaceActivity:
+                gotoTrackingFaceActivity();
+                break;
         }
 
-        Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+    }
 
-        SparseArray<Face> faces = detector.detect(frame);
+    private void gotoTrackingFaceActivity() {
+        startActivity(new Intent(getApplicationContext(),TrackingFaceActivity.class));
+    }
 
-        faceView = (FaceView) findViewById(R.id.faceView);
-        faceView.setContent(faces,bitmap);
-
-
-        /*for (int i = 0; i < faces.size(); ++i) {
-            Face face = faces.valueAt(i);
-            for (Landmark landmark : face.getLandmarks()) {
-                Log.d("HHHH",landmark.getPosition().x+"");
-            }
-        }*/
-
-        detector.release();
-
+    private void gotoFaceDetectorActivity() {
+        startActivity(new Intent(getApplicationContext(),FaceDetectorActivity.class));
     }
 }

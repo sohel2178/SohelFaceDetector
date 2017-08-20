@@ -51,13 +51,19 @@ public class FaceView extends View {
     public void setContent(SparseArray<Face> faces,Bitmap bitmap){
         this.faces = faces;
         this.bitmap = bitmap;
+
+        postInvalidate();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        drawBitMap(canvas);
-        drawFaceAnnotations(canvas);
+
+        if(bitmap!=null){
+            drawBitMap(canvas);
+            drawFaceAnnotations(canvas);
+
+        }
 
 
     }

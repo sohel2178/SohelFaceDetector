@@ -11,16 +11,20 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.FaceDetector;
+import com.linearbd.sohelfacedetector.Thread.FaceDetectorThread;
 
 public class FaceDetectorActivity extends AppCompatActivity {
-    private FaceView faceView;
+    public FaceView faceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face_detector);
 
-        doItinAThread();
+        //doItinAThread();
+
+        FaceDetectorThread faceDetectorThread = new FaceDetectorThread(this);
+        faceDetectorThread.start();
 
         //doIt();
 

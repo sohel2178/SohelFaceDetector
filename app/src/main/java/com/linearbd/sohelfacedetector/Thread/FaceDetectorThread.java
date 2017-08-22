@@ -1,11 +1,11 @@
 package com.linearbd.sohelfacedetector.Thread;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
-import android.util.Log;
 import android.util.SparseArray;
 
 import com.google.android.gms.vision.Detector;
@@ -24,9 +24,15 @@ public class FaceDetectorThread extends Thread {
     private Handler mHandler;
     private Activity activity;
 
+    private ProgressDialog dialog;
+
 
     public FaceDetectorThread(Activity activity){
         this.activity = activity;
+        this.dialog = new ProgressDialog(activity);
+        dialog.setMessage("Please Wait...");
+        dialog.setTitle("Processing Image");
+        dialog.setCancelable(false);
     }
 
 
@@ -34,6 +40,14 @@ public class FaceDetectorThread extends Thread {
     @Override
     public void run() {
         super.run();
+
+        // Show ing the Dialog in the Main Thread
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dialog.show();
+            }
+        });
 
         final Bitmap bitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.face);
 
@@ -53,8 +67,6 @@ public class FaceDetectorThread extends Thread {
         //detector.setProcessor(new LargestFaceFocusingProcessor());
 
         if(!detector.isOperational()){
-            Log.d("HHHH","Not Operational");
-            Log.d("HHHH","Not Operational");
             return;
 
         }
@@ -67,25 +79,15 @@ public class FaceDetectorThread extends Thread {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.d("TTTT","HHHH");
+                //Hiding the Dialog in the UI Thread
+                dialog.dismiss();
                 FaceDetectorActivity faceDetectorActivity = (FaceDetectorActivity) activity;
                 faceDetectorActivity.faceView = (FaceView) activity.findViewById(R.id.faceView);
                 faceDetectorActivity.faceView.setContent(faces,bitmap);
             }
         });
 
-               /* faceView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("TTTT","HHHH");
-                        //faceView.setContent(faces,bitmap);
-                    }
-                });*/
-
-
-
         faceDetector.release();
 
-        Log.d("LLLL","Thread Run Autometically");
     }
 }

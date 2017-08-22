@@ -18,11 +18,12 @@ import com.google.android.gms.vision.face.Landmark;
 import com.google.android.gms.vision.face.LargestFaceFocusingProcessor;
 
 import static com.linearbd.sohelfacedetector.R.id.faceDetectorActivity;
+import static com.linearbd.sohelfacedetector.R.id.qrCodeActivity;
 import static com.linearbd.sohelfacedetector.R.id.trackingFaceActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnFaceDetectorActivity,btnTrackinFaceActivity;
+    private Button btnFaceDetectorActivity,btnTrackinFaceActivity,btnQrCodeActivity;
 
 
 
@@ -33,9 +34,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnFaceDetectorActivity = (Button) findViewById(faceDetectorActivity);
         btnTrackinFaceActivity = (Button) findViewById(trackingFaceActivity);
+        btnQrCodeActivity = (Button) findViewById(qrCodeActivity);
 
         btnFaceDetectorActivity.setOnClickListener(this);
         btnTrackinFaceActivity.setOnClickListener(this);
+        btnQrCodeActivity.setOnClickListener(this);
 
     }
 
@@ -50,8 +53,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.trackingFaceActivity:
                 gotoTrackingFaceActivity();
                 break;
+
+            case R.id.qrCodeActivity:
+                gotoQRCodeActivity();
+                break;
         }
 
+    }
+
+    private void gotoQRCodeActivity() {
+        startActivity(new Intent(getApplicationContext(),QRCodeActivity.class));
     }
 
     private void gotoTrackingFaceActivity() {

@@ -19,6 +19,13 @@
         android:layout_below="@+id/faceDetectorActivity"
         android:text="go to tracking face Activity"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/qrCodeActivity"
+        android:layout_below="@+id/trackingFaceActivity"
+        android:text="go to QR Code Activity"/>
+
 
 
 </RelativeLayout>

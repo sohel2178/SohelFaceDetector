@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">SohelFaceDetector</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="font_fontFamily_medium">sans-serif</string>
+
+
+    <string name="scan">Scan</string>
+    <string name="decode">Encode</string>
+    <string name="save">Saved</string>
+
+
 </resources>
